@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Motos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .motorcycle {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Motos Kawasaki Ninja (+500cc)</h1>
+    <div class="container" id="motorcycles"></div>
+    
+    <script>
+        fetch("/motorcycles")
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById("motorcycles");
+                data.forEach(bike => {
+                    const div = document.createElement("div");
+                    div.className = "motorcycle";
+                    div.innerHTML = `<h2>${bike.make} ${bike.model}</h2>
+                                     <p>Cilindrada: ${bike.displacement} cc</p>
+                                     <p>Potência: ${bike.power} hp</p>`;
+                    container.appendChild(div);
+                });
+            })
+            .catch(error => console.error("Erro ao buscar motos:", error));
+    </script>
+</body>
+</html>
